@@ -228,11 +228,4 @@ elif opt.dataset == 'yoochoose':
     pickle.dump(tra64, open('yoochoose1_64/train.txt', 'wb'))
     pickle.dump(seq64, open('yoochoose1_64/all_train_seq.txt', 'wb'))
 
-else:
-    if not os.path.exists('sample'):
-        os.makedirs('sample')
-    pickle.dump(tra, open('sample/train.txt', 'wb'))
-    pickle.dump(tes, open('sample/test.txt', 'wb'))
-    pickle.dump(tra_seqs, open('sample/all_train_seq.txt', 'wb'))
-
 print('Done.')
