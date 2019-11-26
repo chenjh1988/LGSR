@@ -30,7 +30,7 @@ optional arguments:
   --dataset DATASET     dataset name: diginetica/yoochoose1_4/yoochoose1_64
   --method METHOD       recommendation module method: ha/sr_gnn
   --validation          validation
-  --epoch EPOCH         number of epochs to train for
+  --epoch EPOCH         number of epochs
   --batch_size BATCH_SIZE
                         input batch size
   --emb_size EMB_SIZE   embedding size
