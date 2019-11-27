@@ -20,17 +20,16 @@ def m_print(log):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', default='yoochoose1_64', help='dataset name: diginetica/yoochoose1_4/yoochoose1_64')
-parser.add_argument('--method', type=str, default='ha', help='recommendation module method: ha/sr_gnn')
+parser.add_argument('--dataset', default='yoochoose1_64', help='dataset diginetica/yoochoose1_4/yoochoose1_64')
+parser.add_argument('--method', type=str, default='ha', help='recommendation module method ha/sr_gnn')
 parser.add_argument('--validation', action='store_true', help='validation')
-parser.add_argument('--epoch', type=int, default=30, help='number of epochs to train for')
+parser.add_argument('--epoch', type=int, default=30, help='number of epochs')
 parser.add_argument('--batch_size', type=int, default=100, help='input batch size')
 parser.add_argument('--hidden_size', type=int, default=100, help='hidden state size')
 parser.add_argument('--emb_size', type=int, default=100, help='hidden state size')
 parser.add_argument('--l2', type=float, default=0.0, help='l2 penalty')
 parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
-parser.add_argument('--step', type=int, default=1, help='gnn propogation steps')
-parser.add_argument('--nonhybrid', action='store_true', help='global preference')
+parser.add_argument('--step', type=int, default=1, help='gnn propogation steps for sr_gnn')
 parser.add_argument('--lr_dc', type=float, default=0.1, help='learning rate decay rate')
 parser.add_argument('--lr_dc_step', type=int, default=3, help='the number of steps after which the learning rate decay')
 parser.add_argument('--dropout', type=float, default=0.5, help='dropout rate')
@@ -80,13 +79,12 @@ model = LGSR(hidden_size=opt.hidden_size,
              lr=opt.lr,
              l2=opt.l2,
              step=opt.step,
-             decay=opt.lr_dc_step * len(train_data.inputs) / opt.batch_size,
+             decay=0.1 * len(train_data.inputs) / opt.batch_size,
              lr_dc=opt.lr_dc,
              dropout=opt.dropout,
              cide=opt.cide,
              g_node=g_node,
-             n_sample=opt.n_sample,
-             nonhybrid=opt.nonhybrid)
+             n_sample=opt.n_sample)
 
 m_print(json.dumps(opt.__dict__, indent=4))
 m_print('train len: %d, test len: %d' % (train_data.length, test_data.length))
