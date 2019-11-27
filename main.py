@@ -108,7 +108,7 @@ for epoch in range(opt.epoch):
                 e_loss.append(s_loss)
             cost_time = time.time() - train_start
             m_print('Step: %d, Train cide_Loss: %.4f, Cost: %.2f' % (cide_step, np.mean(e_loss), cost_time))
-            if abs(pre_cite_loss, np.mean(e_loss)) <= 0.005 or epoch >= 4:
+            if abs(pre_cite_loss - np.mean(e_loss)) <= 0.005 or epoch >= 4:
                 early_stop = True
             pre_cite_loss = np.mean(e_loss)
 
