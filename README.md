@@ -14,26 +14,18 @@ For example: `cd datasets; python preprocess.py --dataset=diginetica`
 Then you can run the file `main.py` to train the model
 
 ```bash
-usage: main.py [-h] [--dataset DATASET] [--method METHOD] [--validation]
-               [--epoch EPOCH] [--batch_size BATCH_SIZE]
-               [--hidden_size HIDDEN_SIZE] [--emb_size EMB_SIZE] [--l2 L2]
-               [--lr LR] [--step STEP] [--nonhybrid] [--lr_dc LR_DC]
-               [--lr_dc_step LR_DC_STEP] [--dropout DROPOUT]
-               [--max_len MAX_LEN] [--cide CIDE]
-               [--cide_batch_size CIDE_BATCH_SIZE] [--num_length NUM_LENGTH]
-               [--num_walks NUM_WALKS] [--skip_window SKIP_WINDOW]
-               [--n_sample N_SAMPLE] [--rand_seed RAND_SEED]
-               [--log_file LOG_FILE]
-
-optional arguments:
   -h, --help            show this help message and exit
-  --dataset DATASET     dataset name: diginetica/yoochoose1_4/yoochoose1_64
-  --method METHOD       recommendation module method: ha/sr_gnn
+  --dataset DATASET     dataset diginetica/yoochoose1_4/yoochoose1_64
+  --method METHOD       recommendation module method ha/sr_gnn
   --validation          validation
   --epoch EPOCH         number of epochs
   --batch_size BATCH_SIZE
                         input batch size
-  --emb_size EMB_SIZE   embedding size
+  --hidden_size HIDDEN_SIZE
+                        hidden state size
+  --emb_size EMB_SIZE   hidden state size
+  --l2 L2               l2 penalty
+  --lr LR               learning rate
   --dropout DROPOUT     dropout rate
   --max_len MAX_LEN     sequence max length
   --cide CIDE           the train frequency of cross-session item dependency
