@@ -92,21 +92,27 @@ m_print(json.dumps(opt.__dict__, indent=4))
 m_print('train len: %d, test len: %d' % (train_data.length, test_data.length))
 best_result = [0, 0]
 best_epoch = [0, 0]
+early_stop = False
+pre_cite_loss = 0.0
 walks = graph.construct_walks()
 
 for epoch in range(opt.epoch):
     m_print('<==================epoch: %d==================>' % epoch)
-    for cide_step in range(opt.cide):
-        e_loss = []
-        cide_batch = graph.generate_batch(walks)
-        fetches_node = [model.cide_loss, model.cide_opt, model.global_step_cide]
-        train_start = time.time()
-        for _, x, y in cide_batch:
-            # pdb.set_trace()
-            s_loss, _, _ = model.run_cide(fetches_node, x, y)
-            e_loss.append(s_loss)
-        cost_time = time.time() - train_start
-        m_print('Step: %d, Train cide_Loss: %.4f, Cost: %.2f' % (cide_step, np.mean(e_loss), cost_time))
+    if not early_stop:
+        for cide_step in range(opt.cide):
+            e_loss = []
+            cide_batch = graph.generate_batch(walks)
+            fetches_node = [model.cide_loss, model.cide_opt, model.global_step_cide]
+            train_start = time.time()
+            for _, x, y in cide_batch:
+                # pdb.set_trace()
+                s_loss, _, _ = model.run_cide(fetches_node, x, y)
+                e_loss.append(s_loss)
+            cost_time = time.time() - train_start
+            m_print('Step: %d, Train cide_Loss: %.4f, Cost: %.2f' % (cide_step, np.mean(e_loss), cost_time))
+            if abs(pre_cite_loss, np.mean(e_loss)) <= 0.005 or epoch >= 4:
+                early_stop = True
+            pre_cite_loss = np.mean(e_loss)
 
     # pdb.set_trace()
     slices = train_data.generate_batch(opt.batch_size)
