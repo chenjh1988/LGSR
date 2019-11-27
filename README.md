@@ -49,6 +49,8 @@ python 3.6
 
 tensorflow 1.12.0
 
+networkx 1.11
+
 ## Implementation Reference
 https://github.com/eliorc/node2vec
 
