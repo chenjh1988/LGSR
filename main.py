@@ -51,16 +51,16 @@ np.random.seed(opt.rand_seed)
 tf.set_random_seed(opt.rand_seed)
 logging.basicConfig(level=logging.INFO, format='%(message)s', filename=opt.log_file, filemode='w')
 
-all_train_seq = pickle.load(open('./datasets/' + opt.dataset + '/all_train_seq.txt', 'rb'))
+all_train_seq = pickle.load(open('../datasets/' + opt.dataset + '/all_train_seq.txt', 'rb'))
 if opt.validation:
     if opt.cide > 0:
         train_data, test_data, all_train_seq = split_validation_v2(all_train_seq, frac=0.1)
     else:
-        train_data = pickle.load(open('./datasets/' + opt.dataset + '/train.txt', 'rb'))
+        train_data = pickle.load(open('../datasets/' + opt.dataset + '/train.txt', 'rb'))
         train_data, test_data = split_validation_v1(train_data, frac=0.1)
 else:
-    train_data = pickle.load(open('./datasets/' + opt.dataset + '/train.txt', 'rb'))
-    test_data = pickle.load(open('./datasets/' + opt.dataset + '/test.txt', 'rb'))
+    train_data = pickle.load(open('../datasets/' + opt.dataset + '/train.txt', 'rb'))
+    test_data = pickle.load(open('../datasets/' + opt.dataset + '/test.txt', 'rb'))
 
 if opt.dataset == 'diginetica':
     n_node = 43098
@@ -84,7 +84,8 @@ model = LGSR(hidden_size=opt.hidden_size,
              dropout=opt.dropout,
              cide=opt.cide,
              g_node=g_node,
-             n_sample=opt.n_sample)
+             n_sample=opt.n_sample,
+             max_len=opt.max_len)
 
 m_print(json.dumps(opt.__dict__, indent=4))
 m_print('train len: %d, test len: %d' % (train_data.length, test_data.length))
@@ -108,7 +109,7 @@ for epoch in range(opt.epoch):
                 e_loss.append(s_loss)
             cost_time = time.time() - train_start
             m_print('Step: %d, Train cide_Loss: %.4f, Cost: %.2f' % (cide_step, np.mean(e_loss), cost_time))
-            if abs(pre_cite_loss - np.mean(e_loss)) <= 0.005 or epoch >= 4:
+            if abs(pre_cite_loss - np.mean(e_loss)) <= 0.0005:
                 early_stop = True
             pre_cite_loss = np.mean(e_loss)
 

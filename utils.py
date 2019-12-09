@@ -53,21 +53,7 @@ class Data():
         self.length = len(self.inputs)
         self.shuffle = shuffle
         self.method = method
-        self.remap = self.construct_remap(all_seqs)
-        self.skip_window = 1
         self.maxlen = maxlen
-
-    def construct_remap(self, all_seqs):
-        if all_seqs is None:
-            return None
-        seqs = []
-        for i in all_seqs:
-            seqs.extend(i)
-        cnt = Counter(seqs)
-        cc = cnt.most_common()
-        nodes = [c[0] for c in cc]
-        remap = dict(zip(nodes, range(len(nodes))))
-        return remap
 
     def generate_batch(self, batch_size):
         if self.shuffle:
