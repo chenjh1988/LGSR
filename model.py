@@ -234,10 +234,9 @@ def ha(embedding, inputs, labels, seq_len, hidden_size, emb_size, weight_init,
 class LGSR(object):
     def __init__(self, hidden_size=100, emb_size=100, n_node=None, lr=None, l2=None,
                  step=1, decay=None, lr_dc=0.1, cide=0, g_node=None, n_sample=None,
-                 dropout=0.3, method='ha', num_head=1, num_block=1, nonhybrid=False):
+                 dropout=0.3, method='ha', num_head=1, num_block=1, nonhybrid=False, max_len=19):
         self.n_node = n_node
         self.l2 = l2
-        self.step = step
         self.hidden_size = hidden_size
         self.emb_size = emb_size
         self.global_step = tf.Variable(0, trainable=False, name='global_step')
@@ -251,6 +250,7 @@ class LGSR(object):
         self.num_head = num_head
         self.num_block = num_block
         self.nonhybrid = nonhybrid
+        self.max_len = max_len
 
         self.embedding = tf.get_variable(
             shape=[n_node, emb_size], name='embedding', dtype=tf.float32, initializer=self.weight_init)
@@ -310,7 +310,7 @@ class LGSR(object):
         self.is_train = tf.placeholder(dtype=tf.bool, shape=[])
         # self.pos_table = tf.constant(position_embedding(200, self.emb_size), dtype=tf.float32)
         self.pos_table = tf.get_variable(
-            shape=[20, self.emb_size], name='pos_emb', dtype=tf.float32, initializer=self.weight_init)
+            shape=[self.max_len + 1, self.emb_size], name='pos_emb', dtype=tf.float32, initializer=self.weight_init)
         self.pos_table = tf.concat((tf.zeros(shape=[1, self.emb_size]), self.pos_table[1:, :]), 0)
         loss, self.logits, self.satt, self.att = ha(self.embedding,
                                                     self.inputs,
