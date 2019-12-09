@@ -51,16 +51,16 @@ np.random.seed(opt.rand_seed)
 tf.set_random_seed(opt.rand_seed)
 logging.basicConfig(level=logging.INFO, format='%(message)s', filename=opt.log_file, filemode='w')
 
-all_train_seq = pickle.load(open('../datasets/' + opt.dataset + '/all_train_seq.txt', 'rb'))
+all_train_seq = pickle.load(open('./datasets/' + opt.dataset + '/all_train_seq.txt', 'rb'))
 if opt.validation:
     if opt.cide > 0:
         train_data, test_data, all_train_seq = split_validation_v2(all_train_seq, frac=0.1)
     else:
-        train_data = pickle.load(open('../datasets/' + opt.dataset + '/train.txt', 'rb'))
+        train_data = pickle.load(open('./datasets/' + opt.dataset + '/train.txt', 'rb'))
         train_data, test_data = split_validation_v1(train_data, frac=0.1)
 else:
-    train_data = pickle.load(open('../datasets/' + opt.dataset + '/train.txt', 'rb'))
-    test_data = pickle.load(open('../datasets/' + opt.dataset + '/test.txt', 'rb'))
+    train_data = pickle.load(open('./datasets/' + opt.dataset + '/train.txt', 'rb'))
+    test_data = pickle.load(open('./datasets/' + opt.dataset + '/test.txt', 'rb'))
 
 if opt.dataset == 'diginetica':
     n_node = 43098
