@@ -1,5 +1,5 @@
 # LGSR
-This is the code for our paper. We have implemented our methods in Tensorflow
+This is the code for our paper: Joint Modeling of Local and Global Behavior Dynamics for Session-based Recommendation. We have implemented our methods in Tensorflow
 
 Here are two datasets we used in our paper. After downloaded the datasets, you can put them in the folder `datasets/`:
 - YOOCHOOSE: <http://2015.recsyschallenge.com/challenge.html>
