@@ -262,7 +262,8 @@ class LGSR(object):
             self.build_sr_gnn()
             self.run_rec = self.run_sr_gnn
         elif method == 'ha':
-            self.learning_rate = lr
+            self.learning_rate = tf.train.exponential_decay(
+                lr, global_step=self.global_step, decay_steps=decay, decay_rate=lr_dc, staircase=True)
             self.build_ha()
             self.run_rec = self.run_ha
 
