@@ -31,7 +31,7 @@ parser.add_argument('--l2', type=float, default=0.000001, help='l2 penalty')
 parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
 parser.add_argument('--step', type=int, default=1, help='gnn propogation steps for sr_gnn')
 parser.add_argument('--lr_dc', type=float, default=0.1, help='learning rate decay rate')
-parser.add_argument('--lr_dc_step', type=int, default=3, help='the number of steps after which the learning rate decay')
+parser.add_argument('--lr_dc_step', type=int, default=10, help='the number of steps after which the learning rate decay')
 parser.add_argument('--dropout', type=float, default=0.3, help='dropout rate')
 parser.add_argument('--max_len', type=int, default=19, help='sequence max length')
 
